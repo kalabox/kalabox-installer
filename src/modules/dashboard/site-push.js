@@ -31,7 +31,7 @@ angular.module('kalabox.dashboard')
           $modalInstance.close();
           var site = modalData.site;
           return site.push({
-            message: message || 'No commit message was given',
+            message: message,
             database: database,
             files: files
           });
