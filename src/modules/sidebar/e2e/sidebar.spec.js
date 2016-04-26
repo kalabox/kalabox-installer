@@ -54,22 +54,23 @@ function openSidebar() {
   });
 }
 
-function showsProgress() {
+/*function showsProgress() {
   // Both progress bar and messages shown on at least one site.
   var progressBar = $('.site-wrapper .progress-bar');
   var progressBarShown = EC.presenceOf(progressBar);
   var messages = $('.site-wrapper h3.site-action');
   var messageShown = EC.presenceOf(messages);
   return browser.wait(EC.and(progressBarShown, messageShown));
-}
+}*/
 
-function findSite(siteName) {
+/*function findSite(siteName) {
   var newSiteH3 = element(by.cssContainingText('.site-name', siteName));
   return newSiteH3.element(by.xpath('..'));
-}
+}*/
 
 describe('sidebar module tests', function() {
   beforeEach(function() {
+    console.log('foo');
     browser.get('/dashboard');
     openSidebar();
   });
@@ -125,21 +126,29 @@ describe('sidebar module tests', function() {
   });
 
   it('can pull down a Pantheon D8 site', function() {
+    console.log('testing-1 ' + new Date());
     var siteName = 'testd8site';
     var siteEnv = 'dev';
-    createD8Site(siteName, siteEnv).then(function() {
+    createD8Site(siteName, siteEnv)
+    /*.then(function() {
+      console.log('testing-2 ' + new Date());
       // Start creating.
       return browser.wait(protractor.until.elementLocated(
         by.css('.site-wrapper.overlay-active')));
-    }).then(function() {
+    })*/
+    /*.then(function() {
+      console.log('testing-3 ' + new Date());
       // Make sure progress bar shows up.
       return showsProgress();
-    }).then(function() {
+    })*/
+    .then(function() {
+      console.log('testing-4 ' + new Date());
       // Wait until done creating.
       var busySites = $('.site-wrapper.overlay-active');
       var noBusySites = EC.not(EC.presenceOf(busySites));
       return browser.wait(noBusySites);
     }).then(function() {
+      console.log('testing-5 ' + new Date());
       // Check for presence of new site.
       var newSite = element(by.cssContainingText('.site-name', siteName));
       var newSiteExists = EC.presenceOf(newSite);
@@ -147,7 +156,7 @@ describe('sidebar module tests', function() {
     });
   });
 
-  it('throw error on trying to use a taken app name', function() {
+  /*it('throw error on trying to use a taken app name', function() {
     var siteName = 'testd8site';
     var siteEnv = 'dev';
 
@@ -157,9 +166,9 @@ describe('sidebar module tests', function() {
       var errorPresent = EC.presenceOf($('.app-create-pantheon .alert-error'));
       return browser.wait(errorPresent);
     });
-  });
+  });*/
 
-  it('app has connection info', function() {
+  /*it('app has connection info', function() {
     var siteName = 'cvtenrollee';
 
     // Open connection modal.
@@ -173,5 +182,5 @@ describe('sidebar module tests', function() {
       console.log(databaseText);
       expect(databaseText.count()).toEqual(11);
     });
-  });
+  });*/
 });
